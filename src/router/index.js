@@ -5,7 +5,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import axios from 'axios';
 
 //default base URL / EndPoint API
-axios.defaults.baseURL = "http://127.0.0.1:8000";
+axios.defaults.baseURL = "http://pipk.my.id";
 
 //define a routes
 const routes = [
