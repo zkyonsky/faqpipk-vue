@@ -17,15 +17,32 @@
     <!-- Content -->
     <div class="content">
       <h1>PELATIHAN OPEN ACCESS</h1>
-      <div class="link-list">
-        <div class="link-row top-row">
-          <div v-for="cluster in clusters" :key="cluster.id">
-            <router-link :to="{name: 'detail_course', params: {id: cluster.id}}" class="link-item">
-              {{ cluster.name }}
-            </router-link>
+      <div v-if="clusters.length > 0">
+        <div class="link-list">
+          <div class="link-row top-row">
+            
+              <div v-for="cluster in clusters" :key="cluster.id">
+                <router-link :to="{name: 'detail_course', params: {id: cluster.id}}" class="link-item">
+                  {{ cluster.name }}
+                </router-link>
+              </div>
+            
+            
           </div>
         </div>
       </div>
+      <div v-else>
+        <div class="link-list">
+          <div class="link-row top-row">
+              <div v-for="loader in cluster_loader" :key="loader">
+                <div class="cluster-menu">
+                  <BulletListLoader />
+                </div>                     
+              </div>
+          </div>
+        </div>
+      </div>
+      
     </div>
   </div>
 
@@ -40,12 +57,14 @@ import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import Header from "../../components/Header.vue";
 import Footer from "../../components/Footer.vue";
+import {BulletListLoader} from 'vue-content-loader';
 
 export default {
   
     name: 'CourseComponent',
     
     components: { 
+        BulletListLoader,
         Header, 
         Footer 
     },
@@ -59,6 +78,8 @@ export default {
             //define route
             const route = useRoute();
 
+            const cluster_loader = ref([2]);
+
             //run hook onMounted
             onMounted(() => {
 
@@ -71,6 +92,7 @@ export default {
 
             return {
                 clusters,
+                cluster_loader
             }
      }
     

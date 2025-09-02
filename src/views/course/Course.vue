@@ -6,8 +6,16 @@
             <div class="content">
                 <div v-for="cluster in courses.cluster" :key="cluster.name">
                     <h1>Open Access Kluster {{ cluster.name }} </h1>
-                </div>      
-
+                </div>
+                
+                <div v-if="courses.courses == 0">
+                        <div v-for="loader in cluster_loader" :key="loader">
+                            <div class="cluster-menu">
+                                    <BulletListLoader />
+                            </div>             
+                        </div>
+                </div>
+                <div v-else>
                     <div class="cluster-menu">
                         <div v-for="course in courses.courses" :key="course.id">
                             <a @click="courseLink(course)" class="cluster-item">
@@ -15,7 +23,7 @@
                             </a>
                         </div>
                     </div>
-
+                </div>
                     
 
                 <div class="back-section">
@@ -35,12 +43,14 @@ import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import Header from "../../components/Header.vue";
 import Footer from "../../components/Footer.vue";
+import {BulletListLoader} from 'vue-content-loader';
 
 export default {
   
     name: 'CourseComponent',
     
     components: { 
+        BulletListLoader,
         Header, 
         Footer 
     },
@@ -60,6 +70,8 @@ export default {
             //define state
             const courses  = ref([]);
 
+            const cluster_loader = ref([2]);
+
             //define route
             const route = useRoute();
 
@@ -75,6 +87,7 @@ export default {
 
             return {
                 courses,
+                cluster_loader
             }
 
         }
